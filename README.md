@@ -39,8 +39,7 @@ The system follows a modular ML pipeline that handles data creation, model train
 
 ## ⚙️ Setup
 
-```bash
-git clone https://github.com/<yourusername>/insurance-fraud-detection.git
+git clone https://github.com/Hritam9/insurance-fraud-detection.git
 cd insurance-fraud-detection
 python -m venv .venv
 source .venv/bin/activate
