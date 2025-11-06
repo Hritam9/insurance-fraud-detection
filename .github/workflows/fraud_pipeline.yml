@@ -1,0 +1,75 @@
+name: Insurance Fraud Pipeline (safe CI)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SKIP_SHAP: "true"        # <<-- keep SHAP/Explainability off in CI by default
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install minimal dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # install most deps but avoid heavy GPU libs like torch/shap by excluding them
+          # for reproducibility you can create requirements-ci.txt without shap/torch
+          pip install -r requirements.txt
+
+      - name: Show python/pip versions
+        run: |
+          python -V
+          pip -V
+          pip freeze | sed -n '1,120p'
+
+      - name: Prepare data folder (optional)
+        run: |
+          mkdir -p data/raw data/processed models docs
+
+      - name: Run extractors
+        run: |
+          python src/data_prep/generate_synthetic_data.py
+          python src/data_prep/clean_data.py
+          python src/data_prep/feature_engineering.py
+
+      - name: Train & evaluate model
+        run: |
+          python src/model/train_model.py
+          python src/model/evaluate_model.py
+
+      - name: Explain model (skipped if SKIP_SHAP=true)
+        if: env.SKIP_SHAP != 'true'
+        run: |
+          python src/model/explain_model.py
+
+      - name: Generate dashboard image
+        run: |
+          python scripts/generate_dashboard_png.py || echo "generate_dashboard_png failed - continuing"
+
+      - name: Upload artifacts (model & docs)
+        uses: actions/upload-artifact@v4
+        with:
+          name: fraud_pipeline_artifacts
+          path: |
+            models/fraud_model.pkl
+            docs/*.png
+            data/processed/*.csv
