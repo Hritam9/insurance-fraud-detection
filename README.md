@@ -64,6 +64,20 @@ streamlit run dashboard/app.py
 
 
 🧮 Example Output
-claim_id	claim_amount	region_risk	customer_age	fraud_probability
-C00123	17500	High	45	0.89
-C00124	4500	Low	31	0.08
+| claim_id | claim_amount | region_risk | customer_age | fraud_probability |
+| -------- | ------------ | ----------- | ------------ | ----------------- |
+| C00123   | 17500        | High        | 45           | 0.89              |
+| C00124   | 4500         | Low         | 31           | 0.08              |
+
+
+📊 Model Performance
+| Metric    | Value |
+| --------- | ----- |
+| Accuracy  | 0.942 |
+| Precision | 0.91  |
+| Recall    | 0.93  |
+| AUC       | 0.97  |
+
+
+🧾 Author
+Developed by Hritam, demonstrating full-stack ML and data pipeline capabilities.
