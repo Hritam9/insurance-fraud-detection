@@ -6,6 +6,11 @@ This project builds an end-to-end **machine learning pipeline** to detect potent
 It demonstrates skills in **data engineering, ML modeling, explainability (SHAP), API deployment**, and **dashboard visualization**.
 
 ---
+## 🏗️ Architecture
+
+The system follows a modular ML pipeline that handles data creation, model training, explainability, and serving.
+
+![Architecture Diagram](docs/architecture.png)
 
 ## 🏗️ Architecture
 
@@ -77,6 +82,15 @@ streamlit run dashboard/app.py
 | Precision | 0.91  |
 | Recall    | 0.93  |
 | AUC       | 0.97  |
+
+🧠 Explainability (SHAP Summary)
+Feature importance visualized in docs/model_explainability.md and architecture.png.
+
+## 🧠 Model Explainability (SHAP Summary)
+
+The SHAP summary plot explains which features contribute most to fraud prediction probabilities.
+
+![SHAP Summary Plot](docs/shap_summary_insurance_fraud.png)
 
 
 🧾 Author
