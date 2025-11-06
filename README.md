@@ -64,7 +64,6 @@ streamlit run dashboard/app.py
 
 
 🧮 Example Output
-| claim_id | claim_amount | region_risk | customer_age | fraud_probability |
-| -------- | ------------ | ----------- | ------------ | ----------------- |
-| C00123   | 17500        | High        | 45           | 0.89              |
-| C00124   | 4500         | Low         | 31           | 0.08              |
+claim_id	claim_amount	region_risk	customer_age	fraud_probability
+C00123	17500	High	45	0.89
+C00124	4500	Low	31	0.08
