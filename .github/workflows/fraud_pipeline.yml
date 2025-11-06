@@ -61,10 +61,6 @@ jobs:
         run: |
           python src/model/explain_model.py
 
-      - name: Generate dashboard image
-        run: |
-          python scripts/generate_dashboard_png.py || echo "generate_dashboard_png failed - continuing"
-
       - name: Upload artifacts (model & docs)
         uses: actions/upload-artifact@v4
         with:
